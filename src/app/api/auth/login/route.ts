@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
-import { connectDB } from "../../../lib/db";
-import { User } from "../../../models/User.model";
+import { connectDB } from "../../../../../lib/db";
+import { User } from "../../../../../models/User.model";
 import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
