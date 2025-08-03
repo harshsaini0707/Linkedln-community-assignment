@@ -12,7 +12,7 @@ export async function POST(req: Request) {
 
   const user = await User.findOne({email});
 
-  if(!user || !user.isVerified) return NextResponse.json({message:"User not Found!!" , status : 401});
+  if(!user || !user.isVerified) return NextResponse.json({message:"User not Found!!" , status : 404});
 
   const matchPassword = await bcrypt.compare(password,user.password);
   if(!matchPassword) return NextResponse.json({
@@ -31,7 +31,10 @@ export async function POST(req: Request) {
     );
   }
 
-const response = NextResponse.json({ message: "Login successful" });
+const response = NextResponse.json(
+  { message: "Login successful", status: 200 }, 
+);
+
 response.cookies.set("token", token, {
   httpOnly: true,
     path: "/", 
