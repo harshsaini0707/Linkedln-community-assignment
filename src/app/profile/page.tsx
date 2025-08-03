@@ -39,8 +39,9 @@ const ProfilePage = () => {
         withCredentials: true,
       });
       setPosts(res.data.userPost || []);
-    } catch (err) {
+    } catch (err : unknown) {
       console.error("Failed to fetch posts", err);
+      setMessage('Internal Server Error')
     }
   };
 

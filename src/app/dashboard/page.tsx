@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import UseProfile from "@/hooks/useProfile";
+import UseProfile from "../../hooks/useProfile";
 
 type PostType =  {
   _id: string;
