@@ -6,45 +6,43 @@ import { withCORS } from "../../../../../lib/with-cors";
 import { NextResponse } from "next/server";
 
 export async function handler(req: Request) {
-  const {email , password } = await req.json();
-  
+  const { email, password } = await req.json();
   await connectDB();
 
-  const user = await User.findOne({email});
+  const user = await User.findOne({ email });
 
-  if(!user || !user.isVerified) return NextResponse.json({message:"User not Found!!" , status : 404});
+  if (!user || !user.isVerified) {
+    return new NextResponse(
+      JSON.stringify({ message: "User not Found!!", status: 404 }),
+      { status: 404, headers: { "Content-Type": "application/json" } }
+    );
+  }
 
-  const matchPassword = await bcrypt.compare(password,user.password);
-  if(!matchPassword) return NextResponse.json({
-    message:"Invalid Credentials",
-    status :  401
-  })
+  const matchPassword = await bcrypt.compare(password, user.password);
+  if (!matchPassword) {
+    return new NextResponse(
+      JSON.stringify({ message: "Invalid Credentials", status: 401 }),
+      { status: 401, headers: { "Content-Type": "application/json" } }
+    );
+  }
 
   const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET!, {
     expiresIn: "7d",
   });
 
- if (!token) {
-    return NextResponse.json(
-      { message: "Failed to create token" },
-      { status: 500 }
-    );
-  }
+  const response = new NextResponse(
+    JSON.stringify({ message: "Login successful", status: 200 }),
+    { status: 200, headers: { "Content-Type": "application/json" } }
+  );
 
-const response = NextResponse.json(
-  { message: "Login successful", status: 200 }, 
-);
+  response.cookies.set("token", token, {
+    httpOnly: true,
+    path: "/",
+    maxAge: 60 * 60 * 24 * 7,
+  });
 
-response.cookies.set("token", token, {
-  httpOnly: true,
-    path: "/", 
-  maxAge: 60 * 60 * 24 * 7,
-});
-return response;
-
-
+  return response;
 }
-
 
 export const POST = withCORS(handler);
 export const OPTIONS = withCORS(async () => new NextResponse(null, { status: 204 }));

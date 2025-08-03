@@ -1,4 +1,3 @@
-
 import { NextResponse } from "next/server";
 
 export function withCORS(handler: (req: Request) => Promise<NextResponse>) {
@@ -16,8 +15,9 @@ export function withCORS(handler: (req: Request) => Promise<NextResponse>) {
 }
 
 function addCORSHeaders(response: NextResponse) {
-  response.headers.set("Access-Control-Allow-Origin", process.env.NEXT_PUBLIC_API_URL!);
+  response.headers.set("Access-Control-Allow-Origin", "https://linkedln-community-assignment.vercel.app");
   response.headers.set("Access-Control-Allow-Credentials", "true");
   response.headers.set("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
   response.headers.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  
 }
