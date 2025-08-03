@@ -1,5 +1,5 @@
 "use client";
-import UseProfile from "@/hooks/useProfile";
+import UseProfile from "../../hooks/useProfile";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -14,9 +14,9 @@ const ProfilePage = () => {
 
   useEffect(() => {
     if (userData) {
-      setName(userData.name || "");
-      setBiodata(userData.biodata || "");
-      setEmail(userData.email || "");
+      setName(userData?.name || "");
+      setBiodata(userData?.biodata || "");
+      setEmail(userData?.email || "");
     }
   }, [userData]);
 

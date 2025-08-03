@@ -10,7 +10,7 @@ const Login = () => {
   const [msg, setMessage] = useState('');
   const router = useRouter();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e :  React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!email || !password) {
@@ -30,7 +30,7 @@ const Login = () => {
       if (status === 200) {
         setMessage('Login successful!');
         setTimeout(() => {
-          router.push('/profile');
+          router.push('/dashboard');
         }, 1500);
       } else {
         setMessage(message);

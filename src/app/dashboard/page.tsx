@@ -4,8 +4,15 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import UseProfile from "@/hooks/useProfile";
 
+type PostType =  {
+  _id: string;
+  content: string;
+  createdAt: string;
+  author?: { name?: string };
+}
+
 const Dashboard = () => {
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState<any[]>([]);
   const [newPost, setNewPost] = useState("");
   const [loading, setLoading] = useState(false);
   const [feedLoading, setFeedLoading] = useState(true);
@@ -149,7 +156,7 @@ const getRandomColor = () => {
               <p className="text-gray-600 text-lg">No posts yet. Be the first to share!</p>
             </div>
           ) : (
-            posts.map((post: any) => (
+            posts.map((post: PostType) => (
               <div
                 key={post?._id}
                 className="bg-gray-100 rounded-lg hover:bg-gray-200 border border-black p-4 hover:shadow-md transition-shadow relative overflow-hidden"
