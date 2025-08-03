@@ -10,12 +10,9 @@ export default function VerifyPage() {
   const [otp, setOtp] = useState("");
   const [msg, setMsg] = useState("");
   const [loading, setLoading] = useState(false);
-  const searchParams = useSearchParams();
 
   useEffect(() => {
-    const storedEmail =
-      searchParams.get("email") ||
-      (typeof window !== "undefined" ? sessionStorage.getItem("email") : "");
+    const storedEmail =(typeof window !== "undefined" ? sessionStorage.getItem("email") : "");
 
     if (!storedEmail) {
       router.push("/register");
