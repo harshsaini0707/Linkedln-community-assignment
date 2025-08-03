@@ -2,8 +2,9 @@ import { getUserFromToken } from "../../../../utils/getUserFromToken";
 import { NextResponse } from "next/server";
 import { Post } from "../../../../models/Post.model";
 import { connectDB } from "../../../../lib/db";
+import { withCORS } from "../../../../lib/with-cors"; 
 
-export async function GET(req: Request) {
+async function GET(req: Request) {
   try {
     const user = getUserFromToken(req);
 
@@ -21,7 +22,8 @@ export async function GET(req: Request) {
 
     return NextResponse.json({ userPost: userFeed }, { status: 200 });
   } catch (error) {
- //   console.error("GET user posts error:", error);
     return NextResponse.json({ message: "Internal Server Error!!" }, { status: 500 });
   }
 }
+
+export default withCORS(GET);

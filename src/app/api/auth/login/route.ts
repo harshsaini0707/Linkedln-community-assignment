@@ -2,10 +2,10 @@ import bcrypt from "bcryptjs";
 import { connectDB } from "../../../../../lib/db";
 import { User } from "../../../../../models/User.model";
 import jwt from "jsonwebtoken";
-import { cookies } from "next/headers";
+import { withCORS } from "../../../../../lib/with-cors";
 import { NextResponse } from "next/server";
 
-export async function POST(req: Request) {
+export async function handler(req: Request) {
   const {email , password } = await req.json();
   
   await connectDB();
@@ -44,3 +44,7 @@ return response;
 
 
 }
+
+
+export const POST = withCORS(handler);
+export const OPTIONS = withCORS(async () => new NextResponse(null, { status: 204 }));

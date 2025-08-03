@@ -1,16 +1,19 @@
+// middleware.ts
 import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
-import { connectDB } from "./lib/db"; 
 
-const protectedRoutes = ["/api/dashboard", "/api/profile", "/api/createPost"];
+const protectedRoutes = [
+  "/api/dashboard",
+  "/api/profile",
+  "/api/createPost",
+  "/api/editProfile",
+  "/api/feed",
+  "/api/userPost",
+];
 
-export async function middleware(request: NextRequest) {
+export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  try {
-    await connectDB();
-  } catch (err) {
-    return NextResponse.json({ message: "DB Connection Failed" }, { status: 500 });
-  }
+
   if (protectedRoutes.some(route => pathname.startsWith(route))) {
     const token = request.cookies.get("token")?.value;
 
@@ -30,5 +33,12 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/api/feed", "/api/createPost/:path*", "/api/profile"],
+  matcher: [
+    "/api/dashboard",
+    "/api/profile",
+    "/api/createPost/:path*",
+    "/api/editProfile",
+    "/api/feed",
+    "/api/userPost",
+  ],
 };

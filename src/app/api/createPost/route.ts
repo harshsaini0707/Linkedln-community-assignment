@@ -3,30 +3,37 @@ import { connectDB } from "../../../../lib/db";
 import { Post } from "../../../../models/Post.model";
 import { getUserFromToken } from "../../../../utils/getUserFromToken";
 import { NextResponse } from "next/server";
+import { withCORS } from "../../../../lib/with-cors"; 
 
+async function POST(req: Request) {
+  try {
+    const { content } = await req.json();
 
- 
- export async function POST(req:Request){
-
-    const {content} =  await req.json();
-
-   const user = getUserFromToken(req);
+    const user = getUserFromToken(req);
     if (!user) return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
 
-    if(!content || content.trim().length === 0) return Response.json({
-        message:"Post Can't be Empty"
-    , status :404})
+    if (!content || content.trim().length === 0)
+      return NextResponse.json({ message: "Post can't be empty" }, { status: 400 });
 
     await connectDB();
 
     const newPost = new Post({
-        content:content,
-        author:user.userId
-    })  
+      content,
+      author: user.userId,
+    });
+
     await newPost.save();
 
-    return Response.json({
-        message:"Post Created Successfully",
+    return NextResponse.json(
+      {
+        message: "Post created successfully",
         post: newPost,
-    }, { status :  201})
- }
+      },
+      { status: 201 }
+    );
+  } catch (error) {
+    return NextResponse.json({ message: "Internal Server Error" }, { status: 500 });
+  }
+}
+
+export default withCORS(POST);

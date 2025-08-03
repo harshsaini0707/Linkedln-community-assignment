@@ -2,8 +2,8 @@ import { NextResponse } from "next/server";
 import { connectDB } from "../../../../lib/db";
 import { User } from "../../../../models/User.model";
 import { getUserFromToken } from "../../../../utils/getUserFromToken";
-
-export async function PUT(req: Request) {
+import { withCORS } from "../../../../lib/with-cors"; 
+async function PUT(req: Request) {
   try {
     const user = getUserFromToken(req);
 
@@ -17,10 +17,7 @@ export async function PUT(req: Request) {
 
     const updatedUser = await User.findByIdAndUpdate(
       user.userId,
-      {
-        name,
-        biodata
-      },
+      { name, biodata },
       { new: true }
     );
 
@@ -34,3 +31,5 @@ export async function PUT(req: Request) {
     return NextResponse.json({ message: "Internal server error" }, { status: 500 });
   }
 }
+
+export default withCORS(PUT);

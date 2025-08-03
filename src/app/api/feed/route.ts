@@ -2,27 +2,30 @@ import { NextResponse } from "next/server";
 import { connectDB } from "../../../../lib/db";
 import { Post } from "../../../../models/Post.model";
 import { getUserFromToken } from "../../../../utils/getUserFromToken";
+import { withCORS } from "../../../../lib/with-cors";
 
-export async function GET(req: Request) {
+async function GET(req: Request) {
   try {
-
     const user = getUserFromToken(req);
+
     if (!user) {
-     
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
+
     await connectDB();
 
     const allPosts = await Post.find({})
       .populate("author", "name")
       .sort({ createdAt: -1 });
+
     return NextResponse.json({ allPosts }, { status: 200 });
 
   } catch (error) {
-   // console.error("Failed to fetch feed:", error);
     return NextResponse.json(
       { message: "An error occurred while fetching the feed." },
       { status: 500 }
     );
   }
 }
+
+export default withCORS(GET);
