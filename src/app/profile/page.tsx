@@ -28,6 +28,7 @@ const ProfilePage = () => {
         { withCredentials: true }
       );
       setMessage("Profile updated successfully.");
+       window.location.reload();
     } catch (err) {
       setMessage("Error updating profile.");
     }
@@ -47,7 +48,7 @@ const ProfilePage = () => {
 
   useEffect(() => {
     fetchUserPosts();
-  }, []);
+  }, [posts]);
 
   const formatDate = (date: string) => {
     const d = new Date(date);
@@ -88,7 +89,7 @@ const ProfilePage = () => {
               value={name}
               placeholder={name}
               onChange={(e) => setName(e.target.value)}
-              className="mt-1 w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-black"
+              className="mt-1 w-full px-3 py-2  border-gray-300 rounded focus:outline-none focus:border-black"
             />
           </div>
           <div>
@@ -98,7 +99,7 @@ const ProfilePage = () => {
               value={biodata}
               onChange={(e) => setBiodata(e.target.value)}
               rows={2}
-              className="mt-1 w-full px-3 py-2 border border-gray-300 rounded resize-none focus:outline-none focus:border-black"
+              className="mt-1 w-full px-1 py-2  border-gray-300 rounded resize-none focus:outline-none focus:border-black"
             />
           </div>
         </div>

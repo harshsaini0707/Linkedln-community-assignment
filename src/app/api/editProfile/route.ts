@@ -5,7 +5,7 @@ import { getUserFromToken } from "../../../../utils/getUserFromToken";
 
 
 
-async function PUT(req: Request) {
+export async function PUT(req: Request) {
   try {
     const user = getUserFromToken(req);
 

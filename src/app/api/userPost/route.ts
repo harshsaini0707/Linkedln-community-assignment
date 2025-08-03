@@ -4,7 +4,7 @@ import { Post } from "../../../../models/Post.model";
 import { connectDB } from "../../../../lib/db";
 
 
-async function GET(req: Request) {
+export async function GET(req: Request) {
   try {
     const user = getUserFromToken(req);
 

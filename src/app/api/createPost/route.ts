@@ -4,7 +4,7 @@ import { getUserFromToken } from "../../../../utils/getUserFromToken";
 import { NextResponse } from "next/server";
 
 
-async function POST(req: Request) {
+export async function POST(req: Request) {
   try {
     const { content } = await req.json();
 

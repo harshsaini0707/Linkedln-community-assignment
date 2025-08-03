@@ -3,7 +3,7 @@ import { getUserFromToken } from "../../../../utils/getUserFromToken";
 
 import { NextResponse } from "next/server";
 
-async function GET(req: Request) {
+export async function GET(req: Request) {
   try {
     const user = getUserFromToken(req);
 

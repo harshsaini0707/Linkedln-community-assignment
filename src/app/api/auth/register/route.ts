@@ -3,7 +3,7 @@ import { sendOTPEmail } from "../../../../../utils/mailer";
 import { Otp } from "../../../../../models/otp.model";
 import { NextResponse } from "next/server";
 
-async function POST(req: Request) {
+export async function POST(req: Request) {
   try {
     const { name, email, password, biodata } = await req.json();
 

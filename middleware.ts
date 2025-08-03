@@ -9,6 +9,7 @@ const protectedRoutes = [
   "/api/editProfile",
   "/api/feed",
   "/api/userPost",
+
 ];
 
 export function middleware(request: NextRequest) {

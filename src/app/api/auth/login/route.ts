@@ -11,17 +11,13 @@ export async function POST(req: Request) {
   const user = await User.findOne({ email });
 
   if (!user || !user.isVerified) {
-    return new NextResponse(
-      JSON.stringify({ message: "User not Found!!", status: 404 }),
-      { status: 404, headers: { "Content-Type": "application/json" } }
-    );
+    return  Response.json({message:"User not found!!" , status :  404});
   }
 
   const matchPassword = await bcrypt.compare(password, user.password);
   if (!matchPassword) {
-    return new NextResponse(
-      JSON.stringify({ message: "Invalid Credentials", status: 401 }),
-      { status: 401, headers: { "Content-Type": "application/json" } }
+    return Response.json(
+    { message: "Invalid Credentials", status: 401 }
     );
   }
 
@@ -29,10 +25,7 @@ export async function POST(req: Request) {
     expiresIn: "7d",
   });
 
-  const response = new NextResponse(
-    JSON.stringify({ message: "Login successful", status: 200 }),
-    { status: 200, headers: { "Content-Type": "application/json" } }
-  );
+  const response = NextResponse.json({message : "Login Successful" ,  status : 200})
 
   response.cookies.set("token", token, {
     httpOnly: true,

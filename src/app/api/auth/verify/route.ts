@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 
 
-async function POST(req: Request) {
+export async function POST(req: Request) {
   try {
     const { email, otp } = await req.json();
     await connectDB();
