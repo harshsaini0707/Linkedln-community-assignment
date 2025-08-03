@@ -1,17 +1,17 @@
-"use client";
-import './globals.css'
-import { usePathname } from "next/navigation";
-import Navbar from "../../components/Navbar";
+import './globals.css';
+import { Metadata } from 'next';
+import LayoutWrapper from '../../components/LayWrapper';
+
+export const metadata: Metadata = {
+  title: 'LinkedIn',
+  description: 'Created by harsh',
+};
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const pathname = usePathname();
-  const showNavbar = ["/dashboard", "/profile"].some((path) => pathname.startsWith(path));
-
   return (
     <html lang="en">
       <body>
-        {showNavbar && <Navbar />}
-        {children}
+        <LayoutWrapper>{children}</LayoutWrapper>
       </body>
     </html>
   );

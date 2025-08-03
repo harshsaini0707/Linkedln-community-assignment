@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import axios from "axios";
 
 export default function SignupPage() {
@@ -43,9 +44,9 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#181818] px-4">
-      <div className="w-full max-w-sm bg-[#202020] border border-[#2d2d2d] p-6 rounded-xl shadow-md">
-        <h2 className="text-2xl font-semibold text-white text-center mb-6">
+    <div className="min-h-screen flex items-center justify-center bg-white px-4">
+      <div className="w-full max-w-sm bg-white border border-gray-300 rounded-xl p-6 shadow-md">
+        <h2 className="text-2xl font-bold text-black text-center mb-6">
           Create Your Account
         </h2>
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -54,7 +55,7 @@ export default function SignupPage() {
             placeholder="Full Name"
             onChange={handleChange}
             required
-            className="w-full px-4 py-2.5 bg-[#2a2a2a] text-white placeholder-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 transition"
+            className="w-full px-4 py-2.5 bg-white text-black border border-gray-300 rounded-md placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-black"
           />
           <input
             name="email"
@@ -62,7 +63,7 @@ export default function SignupPage() {
             placeholder="Email Address"
             onChange={handleChange}
             required
-            className="w-full px-4 py-2.5 bg-[#2a2a2a] text-white placeholder-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 transition"
+            className="w-full px-4 py-2.5 bg-white text-black border border-gray-300 rounded-md placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-black"
           />
           <input
             name="password"
@@ -70,30 +71,37 @@ export default function SignupPage() {
             placeholder="Password"
             onChange={handleChange}
             required
-            className="w-full px-4 py-2.5 bg-[#2a2a2a] text-white placeholder-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 transition"
+            className="w-full px-4 py-2.5 bg-white text-black border border-gray-300 rounded-md placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-black"
           />
           <textarea
             name="biodata"
             placeholder="Tell us about yourself (optional)"
             rows={2}
             onChange={handleChange}
-            className="w-full px-4 py-2.5 bg-[#2a2a2a] text-white placeholder-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 transition resize-none"
+            className="w-full px-4 py-2.5 bg-white text-black border border-gray-300 rounded-md placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-black resize-none"
           ></textarea>
 
           <button
             type="submit"
             disabled={loading}
-            className={`w-full py-2.5 rounded-md bg-green-500 text-black font-semibold hover:bg-green-400 transition ${
-              loading && "opacity-60 cursor-not-allowed"
+            className={`w-full py-2.5 rounded-md bg-black text-white font-semibold hover:bg-gray-900 transition ${
+              loading && "opacity-50 cursor-not-allowed"
             }`}
           >
             {loading ? "Sending OTP..." : "Sign Up"}
           </button>
 
           {msg && (
-            <p className="text-sm text-red-400 text-center mt-2">{msg}</p>
+            <p className="text-sm text-red-500 text-center mt-2">{msg}</p>
           )}
         </form>
+
+        <p className="text-sm text-center text-gray-600 mt-6">
+          Already have an account?{" "}
+          <Link href="/login" className="text-blue-500 font-bold hover:underline  ">
+            Login
+          </Link>
+        </p>
       </div>
     </div>
   );

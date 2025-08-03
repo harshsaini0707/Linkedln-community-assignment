@@ -1,5 +1,6 @@
 "use client";
 import axios from "axios";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
@@ -11,7 +12,7 @@ const Navbar = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await axios.get("/api/profile", {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL!}/api/profile`, {
           withCredentials: true,
         });
 
@@ -32,23 +33,21 @@ const Navbar = () => {
 
   return (
     <nav className="fixed top-0 left-0 right-0 h-16 bg-white/80 backdrop-blur-md border-b border-gray-100 shadow-sm z-50 px-6 flex items-center justify-between">
-      <div className="text-xl font-bold tracking-tight text-gray-900">
+     
+      <Link href={'/dashboard'} className="text-xl font-bold tracking-tight text-gray-900">
         LinkedIn Community
-      </div>
+      </Link>
 
       {profileData ? (
         <div className="flex items-center space-x-4">
-          <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-600 text-white font-semibold rounded-full flex items-center justify-center text-sm uppercase shadow-lg ring-2 ring-white">
+          <Link href={'/profile'} className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 text-white font-semibold rounded-full flex items-center justify-center text-lg uppercase shadow-lg ring-2 ring-white">
             {profileData.name?.[0] || "U"}
-          </div>
+          </Link>
           <div className="hidden sm:flex flex-col text-sm font-medium text-gray-700">
             <span>Welcome, {profileData.name}</span>
             <span className="text-xs text-gray-500">
              {`${new Date().getDate()}/${new Date().getMonth() + 1}/${new Date().getFullYear()}`}{" "}
-              {new Date().toLocaleTimeString(undefined, {
-                hour: "2-digit",
-                minute: "2-digit",
-              })}
+             {`${new Date().getHours()}:${new Date().getMinutes()}`}
             </span>
           </div>
         </div>

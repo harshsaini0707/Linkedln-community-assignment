@@ -47,9 +47,9 @@ export default function VerifyPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#181818] px-4">
-      <div className="w-full max-w-sm bg-[#242424] border border-[#333] rounded-xl shadow-md p-6">
-        <h2 className="text-2xl font-semibold text-white text-center mb-4">Verify OTP</h2>
+    <div className="min-h-screen flex items-center justify-center bg-white px-4">
+      <div className="w-full max-w-sm bg-[#fdfdfd] border border-gray-300 rounded-xl shadow-md p-6">
+        <h2 className="text-2xl font-bold text-black text-center mb-4">Verify OTP</h2>
         <form onSubmit={handleVerify} className="space-y-4">
           <input
             name="otp"
@@ -57,18 +57,20 @@ export default function VerifyPage() {
             value={otp}
             onChange={(e) => setOtp(e.target.value)}
             required
-            className="w-full px-4 py-2.5 rounded-md bg-[#2e2e2e] text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 transition"
+            className="w-full px-4 py-2.5 rounded-md bg-white text-black border border-gray-300 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-black transition"
           />
           <button
             type="submit"
             disabled={loading}
-            className={`w-full py-2.5 rounded-md bg-green-500 text-black font-medium hover:bg-green-400 transition ${
-              loading && "opacity-60 cursor-not-allowed"
+            className={`w-full py-2.5 rounded-md bg-black text-white font-semibold hover:bg-gray-900 transition ${
+              loading && "opacity-50 cursor-not-allowed"
             }`}
           >
             {loading ? "Verifying..." : "Verify"}
           </button>
-          {msg && <p className="text-sm text-red-400 text-center">{msg}</p>}
+          {msg && (
+            <p className="text-sm text-red-500 text-center">{msg}</p>
+          )}
         </form>
       </div>
     </div>
