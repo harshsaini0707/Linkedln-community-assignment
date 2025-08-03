@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import { withCORS } from "../../../../../lib/with-cors";
 
-async function handler() {
+
+async function POST() {
   const response = NextResponse.json({ message: "Logout Successful" });
 
   response.cookies.set("token", "", {
@@ -13,7 +13,3 @@ async function handler() {
   return response;
 }
 
-
-export const POST = withCORS(handler);
-
-export const OPTIONS = withCORS(async () => new NextResponse(null, { status: 204 }));

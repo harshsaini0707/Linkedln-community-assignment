@@ -4,9 +4,9 @@ import { User } from "../../../../../models/User.model";
 import { Otp } from "../../../../../models/otp.model";
 import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
-import { withCORS } from "../../../../../lib/with-cors";
 
-async function handler(req: Request) {
+
+async function POST(req: Request) {
   try {
     const { email, otp } = await req.json();
     await connectDB();
@@ -62,6 +62,3 @@ async function handler(req: Request) {
 }
 
 
-export const POST = withCORS(handler);
-
-export const OPTIONS = withCORS(async () => new NextResponse(null, { status: 204 }));

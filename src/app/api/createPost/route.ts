@@ -2,9 +2,9 @@ import { connectDB } from "../../../../lib/db";
 import { Post } from "../../../../models/Post.model";
 import { getUserFromToken } from "../../../../utils/getUserFromToken";
 import { NextResponse } from "next/server";
-import { withCORS } from "../../../../lib/with-cors";
 
-async function handler(req: Request) {
+
+async function POST(req: Request) {
   try {
     const { content } = await req.json();
 
@@ -36,7 +36,3 @@ async function handler(req: Request) {
   }
 }
 
-export const POST = withCORS(handler);
-
-
-export const OPTIONS = withCORS(async () => new NextResponse(null, { status: 204 }));

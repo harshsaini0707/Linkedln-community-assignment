@@ -1,10 +1,9 @@
 import { connectDB } from "../../../../../lib/db";
 import { sendOTPEmail } from "../../../../../utils/mailer";
 import { Otp } from "../../../../../models/otp.model";
-import { withCORS } from "../../../../../lib/with-cors"; 
 import { NextResponse } from "next/server";
 
-async function handler(req: Request) {
+async function POST(req: Request) {
   try {
     const { name, email, password, biodata } = await req.json();
 
@@ -17,7 +16,7 @@ async function handler(req: Request) {
       {
         email,
         otp,
-        expiresAt: new Date(Date.now() + 5 * 60 * 1000), // 5 minutes
+        expiresAt: new Date(Date.now() + 5 * 60 * 1000), 
         userData: { name, email, password, biodata },
       },
       { upsert: true, new: true }
@@ -32,7 +31,3 @@ async function handler(req: Request) {
   }
 }
 
-export const POST = withCORS(handler);
-
-
-export const OPTIONS = withCORS(async () => new NextResponse(null, { status: 204 }));
