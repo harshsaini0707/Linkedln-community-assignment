@@ -1,9 +1,17 @@
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
+
+type ProfileType = {
+  name: string,
+  email : string,
+  biodata : string,
+  createdAt:string
+
+};
 
 const UseProfile = () => {
-  const [profileData, setProfileData] = useState(null);
+  const [profileData, setProfileData] = useState<ProfileType | null>(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -16,17 +24,17 @@ const UseProfile = () => {
         if (response.status === 200) {
           setProfileData(response.data.data);
         } else {
-         
           router.push("/login");
         }
-      } catch (error: any) {
+      } catch (error: unknown) {
         router.push("/login");
       }
     };
 
     fetchProfile();
   }, [router]);
-  return profileData;
-}
 
-export default UseProfile
+  return profileData;
+};
+
+export default UseProfile;

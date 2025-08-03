@@ -30,7 +30,7 @@ export default function VerifyPage() {
     setMsg("");
 
     try {
-      const res = await axios.post(
+       await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/api/auth/verify`,
         { email, otp },
         { withCredentials: true }
@@ -39,9 +39,11 @@ export default function VerifyPage() {
       setMsg("Verification successful!");
       sessionStorage.removeItem("email");
       router.push("/dashboard");
-    } catch (err: any) {
-      setMsg(err.response?.data || "Invalid or expired OTP");
-    } finally {
+    }  catch (error: unknown) {
+  if (error instanceof Error) {
+    console.log(error.message);
+  }
+} finally {
       setLoading(false);
     }
   };

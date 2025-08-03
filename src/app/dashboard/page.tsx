@@ -12,7 +12,8 @@ type PostType =  {
 }
 
 const Dashboard = () => {
-  const [posts, setPosts] = useState<any[]>([]);
+  const [posts, setPosts] = useState<PostType[]>([]);
+
   const [newPost, setNewPost] = useState("");
   const [loading, setLoading] = useState(false);
   const [feedLoading, setFeedLoading] = useState(true);
@@ -41,7 +42,7 @@ const Dashboard = () => {
     }
   };
 
-  const handleCreatePost = async (e: any) => {
+  const handleCreatePost = async (e:  React.MouseEvent<HTMLButtonElement> | React.KeyboardEvent<HTMLTextAreaElement>) => {
     e.preventDefault();
     if (!newPost.trim()) return;
 
@@ -59,7 +60,7 @@ const Dashboard = () => {
 
       setNewPost("");
       fetchFeed();
-    } catch (err) {
+    } catch (err : unknown) {
       setError("Error creating post");
       console.log("Post error:", err);
     } finally {

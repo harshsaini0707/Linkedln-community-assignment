@@ -85,6 +85,7 @@ const ProfilePage = () => {
             <label className="text-sm font-medium text-gray-700">Edit Name</label>
             <input
               value={name}
+              placeholder={name}
               onChange={(e) => setName(e.target.value)}
               className="mt-1 w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-black"
             />
@@ -92,6 +93,7 @@ const ProfilePage = () => {
           <div>
             <label className="text-sm font-medium text-gray-700">Edit Biodata</label>
             <textarea
+              placeholder={biodata}
               value={biodata}
               onChange={(e) => setBiodata(e.target.value)}
               rows={2}
