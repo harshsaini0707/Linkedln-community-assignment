@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import axios from "axios";
 
 export default function VerifyPage() {
@@ -10,7 +10,6 @@ export default function VerifyPage() {
   const [otp, setOtp] = useState("");
   const [msg, setMsg] = useState("");
   const [loading, setLoading] = useState(false);
-  const searchParams = useSearchParams();
 
   useEffect(() => {
     const storedEmail = (typeof window !== "undefined" ? sessionStorage.getItem("email") : "");
