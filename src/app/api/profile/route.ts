@@ -3,7 +3,7 @@ import { getUserFromToken } from "../../../../utils/getUserFromToken";
 import { withCORS } from "../../../../lib/with-cors"; 
 import { NextResponse } from "next/server";
 
-async function GET(req: Request) {
+async function handler(req: Request) {
   try {
     const user = getUserFromToken(req);
 
@@ -23,4 +23,5 @@ async function GET(req: Request) {
   }
 }
 
-export default withCORS(GET);
+export const GET = withCORS(handler);
+export const OPTIONS = withCORS(async () => new NextResponse(null, { status: 204 }));

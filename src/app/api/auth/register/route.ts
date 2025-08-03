@@ -4,7 +4,7 @@ import { Otp } from "../../../../../models/otp.model";
 import { withCORS } from "../../../../../lib/with-cors"; 
 import { NextResponse } from "next/server";
 
-async function POST(req: Request) {
+async function handler(req: Request) {
   try {
     const { name, email, password, biodata } = await req.json();
 
@@ -27,8 +27,12 @@ async function POST(req: Request) {
 
     return NextResponse.json({ message: "Verify OTP!!" });
   } catch (error) {
+    console.error("Register OTP error:", error);
     return NextResponse.json({ message: "Internal Server Error" }, { status: 500 });
   }
 }
 
-export default withCORS(POST);
+export const POST = withCORS(handler);
+
+
+export const OPTIONS = withCORS(async () => new NextResponse(null, { status: 204 }));

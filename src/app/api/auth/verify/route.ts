@@ -1,5 +1,3 @@
-// app/api/auth/verify/route.ts
-
 import bcrypt from "bcryptjs";
 import { connectDB } from "../../../../../lib/db";
 import { User } from "../../../../../models/User.model";
@@ -7,15 +5,18 @@ import { Otp } from "../../../../../models/otp.model";
 import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 import { withCORS } from "../../../../../lib/with-cors";
-async function POST(req: Request) {
+
+async function handler(req: Request) {
   try {
     const { email, otp } = await req.json();
     await connectDB();
 
     const otpEntry = await Otp.findOne({ email });
+    if (!otpEntry)
+      return NextResponse.json({ message: "OTP not found" }, { status: 400 });
 
-    if (!otpEntry) return NextResponse.json({ message: "OTP not found" }, { status: 400 });
-    if (otpEntry.otp !== otp) return NextResponse.json({ message: "Invalid OTP" }, { status: 401 });
+    if (otpEntry.otp !== otp)
+      return NextResponse.json({ message: "Invalid OTP" }, { status: 401 });
 
     if (new Date() > otpEntry.expiresAt) {
       await Otp.deleteOne({ email });
@@ -23,7 +24,8 @@ async function POST(req: Request) {
     }
 
     const emailExists = await User.findOne({ email });
-    if (emailExists) return NextResponse.json({ message: "User Already Exists!" }, { status: 400 });
+    if (emailExists)
+      return NextResponse.json({ message: "User Already Exists!" }, { status: 400 });
 
     const hashedPassword = await bcrypt.hash(otpEntry.userData.password, 10);
 
@@ -59,4 +61,7 @@ async function POST(req: Request) {
   }
 }
 
-export default withCORS(POST);
+
+export const POST = withCORS(handler);
+
+export const OPTIONS = withCORS(async () => new NextResponse(null, { status: 204 }));
