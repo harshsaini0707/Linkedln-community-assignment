@@ -13,9 +13,7 @@ export default function VerifyPage() {
   const searchParams = useSearchParams();
 
   useEffect(() => {
-    const storedEmail =
-      searchParams.get("email") ||
-      (typeof window !== "undefined" ? sessionStorage.getItem("email") : "");
+    const storedEmail = (typeof window !== "undefined" ? sessionStorage.getItem("email") : "");
 
     if (!storedEmail) {
       router.push("/register");
